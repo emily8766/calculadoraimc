@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora IMC</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="cabecalho">
+      <h1>Calculadora de IMC</h1>
+      <h3>Bem-vindo à nossa Calculadora de IMC!</h3>
+      <p>Aqui você pode descobrir rapidamente o seu Índice de Massa Corporal e entender melhor a relação entre seu peso e sua altura.</p> 
+    </div>
+  </header>
+
+  <section>
+    <div class="calculadora">
+      <form id="formulario">
+        <label>Idade</label><br/>
+        <input type="text" name="idade" required> anos <br/>
+
+        <label>Altura</label><br/>
+        <input type="text" id="altura" name="altura" required> m  <br/>
+
+        <label>Peso</label><br/>
+        <input type="text" id="peso" name="peso" required> kg  <br/>
+
+        <label>Sexo</label><br/>
+        <input class="botao-sexo" type="radio" name="sexo" value="feminino" required> feminino
+        <input class="botao-sexo" type="radio" name="sexo" value="masculino"> masculino<br/><br/>
+
+        <button type="submit">CALCULAR IMC</button>
+      </form>
+      <div id="resultado" style="margin-top:20px;"></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 por Emily Dantas Souza</p>
+  </footer>
+
+  <script>
+    document.getElementById("formulario").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const peso = parseFloat(document.getElementById("peso").value);
+  const altura = parseFloat(document.getElementById("altura").value);
+  const resultado = document.getElementById("resultado");
+  const formulario = document.getElementById("formulario");
+
+  if (isNaN(peso) || isNaN(altura) || altura <= 0) {
+    resultado.innerText = "Por favor, preencha os campos corretamente.";
+    return;
+  }
+
+  const imc = peso / (altura * altura);
+  let mensagem = "";
+  let imagem = "";
+
+  if (imc < 18.5) {
+    imagem = "./imagens/baixopeso.jpg";
+    mensagem = `<strong>BAIXO PESO</strong><br/>É recomendado procurar um médico . IMC: ${imc.toFixed(2)}`;
+  } else if (imc < 25) {
+    imagem = "./imagens/pesoideal.jpg";
+    mensagem = `<strong>PESO IDEAL</strong><br/>Tudo indica que está tudo bem. IMC: ${imc.toFixed(2)}`;
+  } else if (imc < 30) {
+    imagem = "./imagens/sobrepeso.jpg";
+    mensagem = `<strong>SOBREPESO</strong><br/>Atenção! Pode haver riscos. IMC: ${imc.toFixed(2)}`;
+  } else {
+    imagem = "./imagens/obesidade.jpg";
+    mensagem = `<strong>OBESIDADE</strong><br/>Busque orientação médica. IMC: ${imc.toFixed(2)}`;
+  }
+
+  // Esconde o formulário
+  formulario.style.display = "none";
+
+  // Exibe o resultado
+  resultado.innerHTML = `<img src="${imagem}" alt="Resultado IMC" style="width:200px;"><p>${mensagem}</p>`;
+});
+  </script>
+
+</body>
+</html>
